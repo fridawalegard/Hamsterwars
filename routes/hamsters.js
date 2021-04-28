@@ -45,7 +45,7 @@ const router = express.Router()
 		hamsters.push(data);
 	});
 
-	res.send(hamsters);
+	res.status(200).send(hamsters);
 });
 
  // GET /hamsters/random    hämtar ett slumpat hamster-objekt   

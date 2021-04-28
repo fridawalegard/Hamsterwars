@@ -39,10 +39,10 @@ app.use('/winners', winners);
 //app.use('/losers', losers);
 
 
-app.get('/frontend', (req, res) => {
+/*app.get('/frontend', (req, res) => {
     console.log('GET /frontend')
     res.sendFile(__dirname + '/frontend/index.html')
-})
+})*/
 
 
 
