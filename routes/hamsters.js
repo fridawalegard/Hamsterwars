@@ -5,7 +5,6 @@ const db = getDatabase()
 const express = require('express')
 const router = express.Router()
 
-const hamsters = []
 
  //  GET  /hamsters/    hämtar alla hamster-objekt
 
@@ -39,7 +38,7 @@ const hamsters = []
 		res.sendStatus(400);
 		return;
 	}
-
+    const hamsters = []
 	snapshot.forEach(doc => {
 		const data = doc.data();
 		data.id = doc.id;
@@ -52,9 +51,22 @@ const hamsters = []
  // GET /hamsters/random    hämtar ett slumpat hamster-objekt   
 
     router.get('/random', async (req, res) => {
+        const docRef = db.collection("hamsters");
+        const snapshot = await docRef.get();
 
-        const getRandomHamster = hamsters[Math.floor(Math.random()*hamsters.length)];
-        res.send(getRandomHamster)
+  if (snapshot.empty) {
+    res.status(404).send('Can not find any hamster');
+    return;
+  }
+
+  const hamsters = [];
+  snapshot.forEach((doc) => {
+    const data = doc.data();
+    hamsters.push(data);
+  });
+
+    const getRandomHamster = hamsters[Math.floor(Math.random()*hamsters.length)];
+    res.send(getRandomHamster)
     
 })
 
