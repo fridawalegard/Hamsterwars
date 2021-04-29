@@ -43,22 +43,36 @@ const router = express.Router()
  // GET /hamsters/random    hämtar ett slumpat hamster-objekt   
 
     router.get('/random', async (req, res) => {
-        const docRef = db.collection("hamsters");
-        const snapshot = await docRef.get();
 
-  if (snapshot.empty) {
+	let docRef;
+        
+	try {
+		docRef = await db.collection("hamsters").get();
+	}	
+
+	catch(error) {
+		console.log(error.message)
+		res.status(500).send(error.message)
+	}
+
+  if (docRef.empty) {
     res.status(404).send('Can not find any hamster');
     return;
   }
 
-  const hamsters = [];
-  snapshot.forEach((doc) => {
-    const data = doc.data();
-    hamsters.push(data);
-  });
+  let hamsters = [];
+  let getRandomHamster;
 
-    const getRandomHamster = hamsters[Math.floor(Math.random()*hamsters.length)];
+  docRef.forEach((doc) => {
+    const data = doc.data();
+	data.id = doc.id;
+    hamsters.push(data);
+
+	getRandomHamster = hamsters[Math.floor(Math.random()*hamsters.length)];
+  });
+    
     res.send(getRandomHamster)
+
     
 })
 
