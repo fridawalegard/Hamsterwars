@@ -9,17 +9,17 @@ const router = express.Router();
 router.get('/', async (req, res) => {
 
 	try {
-		let hamsters = await db.collection('hamsters').orderBy('wins', 'desc').limit(5).get();
+		let hamsters = await db.collection('hamsters').orderBy('defeats', 'desc').limit(5).get();
 		
-		const winnersTop = [];
+		const losersTop = [];
 		hamsters.forEach(doc => {
 			data = doc.data();
-			winnersTop.push(data);
+			losersTop.push(data);
 		})
 
-			console.log(winnersTop);
+			console.log(losersTop);
 		
-		res.send(winnersTop);
+		res.send(losersTop);
 	}
 	
 	catch(error) {

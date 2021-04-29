@@ -5,8 +5,8 @@ const path = require('path');
 const hamsters = require('./routes/hamsters.js');
 const matches = require('./routes/matches.js');
 const winners = require('./routes/winners.js');
-//const losers = require('./routes/losers.js');
-const matchwinners = require('./routes/matchwinners.js');
+const losers = require('./routes/losers.js');
+const matchwinners = require('./routes/matchWinners.js');
 
 
 const PORT = process.env.PORT || 1337;
@@ -30,13 +30,11 @@ app.use(express.static(img))
 
 //ROUTES
 
-
-// HANTERAR RESURSEN WEB ROOT REQUERS OCH RESPONSE
 app.use('/hamsters', hamsters);
 app.use('/matches', matches);
-app.use('/matchwinners', matchwinners);
+app.use('/matchWinners', matchwinners);
 app.use('/winners', winners);
-//app.use('/losers', losers);
+app.use('/losers', losers);
 
 
 /*app.get('/frontend', (req, res) => {

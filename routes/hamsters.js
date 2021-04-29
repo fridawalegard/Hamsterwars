@@ -9,19 +9,6 @@ const router = express.Router()
  //  GET  /hamsters/    hämtar alla hamster-objekt
 
     router.get('/', async (req, res) => {
-      /*  const hamstersRef = db.collection('hamsters')
-        const snapshot = await hamstersRef.get()
-    
-        
-        snapshot.forEach(docRef => {
-            const data = docRef.data()
-            hamsters.push(data)
-        })
-    
-        res.status(200).send(hamsters)
-
-        
-    }) */
 
     let snapshot;
 
@@ -29,15 +16,19 @@ const router = express.Router()
 		snapshot = await db.collection('hamsters').get();
 	}
 
+
 	catch(error) {
 		console.log(error.message);
 		res.status(500).send(error.message);
 	}
 
+	
 	if (snapshot.empty) {
 		res.sendStatus(400);
 		return;
 	}
+
+
     const hamsters = []
 	snapshot.forEach(doc => {
 		const data = doc.data();
@@ -46,6 +37,7 @@ const router = express.Router()
 	});
 
 	res.status(200).send(hamsters);
+
 });
 
  // GET /hamsters/random    hämtar ett slumpat hamster-objekt   
@@ -121,9 +113,11 @@ router.post('/', async (req, res) => {
 // PUT /hamsters/:id
 
 router.put('/:id', async (req, res) => {
+
 	const object = req.body
 	const id = req.params.id
     const docRef = db.collection('hamsters').doc(id);
+	
 	let hamsterRef;
 
     if(!object || !id ) {
@@ -171,13 +165,12 @@ router.put('/:id', async (req, res) => {
 
 
 function isHamsterObject(obj) {
-	// Pratigt, men kanske mera lättläst. Kan göras mer kompakt
 
-        if( obj && ['name', 'age', 'favFood', 'loves', 'imgName', 'wins', 'defeats', 'games'].every(o => obj.hasOwnProperty(o)) ) {
+     if( obj && ['name', 'age', 'favFood', 'loves', 'imgName', 'wins', 'defeats', 'games'].every(o => obj.hasOwnProperty(o)) ) {
             return true;
         }
     
-        if( obj.id )
+    if( obj.id )
             return true
     
         return false;
@@ -193,14 +186,12 @@ router.delete('/:id', async (req, res) => {
 	if(!id) {
 		res.status(400).send('Oh no, there is no hamster that matches that id')
 		return
-
     }
 
     let docRef;
 
 	try {
 		docRef = await db.collection('hamsters').doc(id).get();
-
 	}
 
 	catch(error) {

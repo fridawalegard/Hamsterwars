@@ -52,7 +52,7 @@ router.get('/:id', async (req, res) => {
 	}
 
 	if (!docRef.exists) {
-		res.status(404).send("Ingen match");
+		res.status(404).send("Ooops, there is no match with that id");
 		return;
 	};
 
