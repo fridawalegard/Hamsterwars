@@ -6,7 +6,7 @@ const hamsters = require('./routes/hamsters.js');
 const matches = require('./routes/matches.js');
 const winners = require('./routes/winners.js');
 const losers = require('./routes/losers.js');
-const matchwinners = require('./routes/matchWinners.js');
+const matchwinners = require('./routes/matchwinners.js');
 
 
 const PORT = process.env.PORT || 1337;
@@ -32,7 +32,7 @@ app.use(express.static(img))
 
 app.use('/hamsters', hamsters);
 app.use('/matches', matches);
-app.use('/matchWinners', matchwinners);
+app.use('/matchwinners', matchwinners);
 app.use('/winners', winners);
 app.use('/losers', losers);
 
